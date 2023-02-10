@@ -1,0 +1,38 @@
+@startuml
+
+skinparam class {
+  BackgroundColor #ebebeb
+  ArrowColor      #333
+  BorderColor     #333
+}
+
+skinparam lineType ortho
+
+package application {
+  package model {
+    class application.model.Item extends pydantic.BaseModel {
+       + verb: str
+       + path: str
+    }
+
+    class Storage {
+       + tree: typing.Dict[str, typing.Union[dict, str]]
+    }
+  }
+
+  package api {
+    class VerbExists extends builtins.RuntimeError {}
+    class API {
+      - storage: application.model.Storage
+      ---
+      + add_item(item: application.model.Item) -> None
+      + get_tree() -> typing.Dict[str, typing.Union[dict, str]]
+    }
+
+    API -- VerbExists : "raises >"
+    API *-> Storage
+    API -- application.model.Item
+  }
+}
+
+@enduml

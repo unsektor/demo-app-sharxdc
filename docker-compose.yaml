@@ -1,0 +1,12 @@
+version: '3.2'
+
+services:
+  service:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  test:
+    build:
+      dockerfile: unit-test.Dockerfile
